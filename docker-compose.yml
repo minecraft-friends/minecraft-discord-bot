@@ -1,0 +1,6 @@
+version: '2'
+services:
+  bot:
+    build: .
+    command: node index.js
+    
