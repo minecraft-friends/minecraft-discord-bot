@@ -1,5 +1,9 @@
 # Config
 config.json
+.env
 
 # Dependencies
 node_modules
+
+# intellij
+.idea
