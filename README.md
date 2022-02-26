@@ -26,10 +26,20 @@ Users can also request more information using the `stats` command, for example t
 * **Clone** the repository (`git clone https://github.com/Androz2091/minecraft-discord-bot`) or **download** it.
 * Install Node.js and NPM if they are not installed.
 * Open your terminal and run `npm install` to install all the dependencies.
-* [Fill the config file](#fill-the-config-file).
+* [Create a config file](#fill-the-config-file) and save it to an S3 bucket.
+* [Set environment variables](#set-environment-variables) with bucket details.
 * Run `node .`
 * You're done!
-  
+ 
+### Set environment variables
+
+The bot will pull down the `config.json` file from an S3 bucket based on environment variables. For an example `.env` file see [`sample.env`](sample.env). 
+
+| Env Variable    | Description    |
+|-----------------|----------------|
+| BUCKET_NAME     | Name of bucket |
+| BUCKET_KEY_NAME | Name of key    |
+ 
 #### Fill the config file
 
 You will have to fill the `config.json` file to make the bot working (rename the `config.sample.json` file to `config.json`). Here are some informations about the config file fields:
