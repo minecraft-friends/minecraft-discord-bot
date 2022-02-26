@@ -35,10 +35,11 @@ Users can also request more information using the `stats` command, for example t
 
 The bot will pull down the `config.json` file from an S3 bucket based on environment variables. For an example `.env` file see [`sample.env`](sample.env). 
 
-| Env Variable    | Description    |
-|-----------------|----------------|
-| BUCKET_NAME     | Name of bucket |
-| BUCKET_KEY_NAME | Name of key    |
+| Env Variable    | Description                        |
+|-----------------|------------------------------------|
+| BUCKET_NAME     | Name of bucket                     |
+| BUCKET_KEY_NAME | Name of key                        |
+| EC2_INSTANCE_ID | Instance ID of the minecraft sever |
  
 #### Fill the config file
 
