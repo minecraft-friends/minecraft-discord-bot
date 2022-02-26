@@ -48,13 +48,13 @@ module.exports = class Bot {
         client.on('message', async message => {
             if (message.author.bot || message.channel.type === 'dm') return;
 
-            if (message.content == `${this.config.prefix}help`) {
+            if (message.content === `${this.config.prefix}help`) {
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`${client.user.username} command list`)
                     .setColor('3f04a4')
                     .setThumbnail(client.user.avatarURL())
                     .setDescription(`
-**Server prefix:** \`${prefix}\`\n
+**Server prefix:** \`${this.config.prefix}\`\n
 ${commandList.map(cmd => `**${cmd.name}**\n${cmd.description}\n\`${this.config.prefix}${cmd.usage}\``).join('\n\n')}
 `)
                     .setFooter(`[] is optional, <> is required • command count: ${commandList.length}`);
