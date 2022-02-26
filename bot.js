@@ -66,6 +66,10 @@ ${commandList.map(cmd => `**${cmd.name}**\n${cmd.description}\n\`${this.config.p
             const args = message.content.slice(this.config.prefix.length).trim().split(/ +/);
             const command = args.shift().toLowerCase();
 
+            if (!message.member.roles.cache.has(this.config.role)) {
+                return message.channel.send("You do not have access")
+            }
+
             if (!client.commands.has(command)) return;
 
             try {

@@ -52,3 +52,4 @@ You will have to fill the `config.json` file to make the bot working (rename the
 * `statusChannel`: The Discord ID of the voice channel that will show the status of your server.
 * `updateInterval`: The interval for the voice channel update. **Due to a recent update of Discord, the interval must be greater than 10 minutes**
 * `prefix`: the prefix of the bot for text commands.
+* `role`: Discord role needed to run bot commands
