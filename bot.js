@@ -9,7 +9,7 @@ module.exports = class Bot {
     config;
 
     login() {
-        fs.readFile('config.json', (err, data) => {
+        fs.readFile(process.env.BUCKET_KEY_NAME, (err, data) => {
             if (err) throw err;
             let config = JSON.parse(data);
             this.config = config;
