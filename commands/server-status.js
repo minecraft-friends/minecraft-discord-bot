@@ -8,7 +8,7 @@ module.exports = {
         await aws.serverStatus().then((status) => {
             sentMessage.edit(`Server is ${status}`)
         }).catch(err => {
-            sentMessage.edit("Failed to get server status")
+            sentMessage.edit(`Failed to get server status`)
         });
     },
 };

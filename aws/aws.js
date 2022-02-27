@@ -44,6 +44,7 @@ async function stopServer() {
     let stopInstancePromise = new AWS.EC2().stopInstances(params).promise();
     await stopInstancePromise.then(() => {
     }).catch(err => {
+        console.log(err)
         throw err
     })
 }
@@ -58,6 +59,7 @@ async function startServer() {
     let startInstancePromise = new AWS.EC2().startInstances(params).promise();
     await startInstancePromise.then(() => {
     }).catch(err => {
+        console.log(err)
         throw err
     })
 }
@@ -72,6 +74,7 @@ async function rebootServer() {
     let rebootInstancePromise = new AWS.EC2().rebootInstances(params).promise();
     await rebootInstancePromise.then(() => {
     }).catch(err => {
+        console.log(err)
         throw err
     })
 }
@@ -88,6 +91,7 @@ async function serverStatus() {
     return await describeInstancePromise.then(value => {
         return value.InstanceStatuses[0].InstanceState.Name.toString()
     }).catch(err => {
+        console.log(err)
         throw err
     })
 }
