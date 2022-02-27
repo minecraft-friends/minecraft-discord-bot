@@ -27,7 +27,7 @@ async function getConfig() {
     };
     let bucketPromise = new AWS.S3().getObject(getObjectRequest).promise();
     await bucketPromise.then(value => {
-        console.log("writing config.json")
+        console.log(`writing config.json from ${getObjectRequest.Bucket}/${getObjectRequest.Key}`)
         fs.createWriteStream("config.json").write(value.Body);
     }).catch(err => {
         console.log(err);
