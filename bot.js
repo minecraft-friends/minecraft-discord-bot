@@ -3,6 +3,8 @@ const ms = require('ms');
 const fetch = require('node-fetch');
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const aws = require('./aws/aws');
+globalThis.autoStopFlag = true;
 
 module.exports = class Bot {
 
@@ -30,15 +32,17 @@ module.exports = class Bot {
             const command = require(`./commands/${file}`);
             // set a new item in the Collection
             // with the key as the command name and the value as the exported module
-            commandList.push({'name': command.name, 'description': command.description, 'usage': command?.usage});
+            commandList.push({ 'name': command.name, 'description': command.description, 'usage': command?.usage });
             client.commands.set(command.name, command);
         }
 
         client.on('ready', () => {
-            client.user.setActivity(`the server ${this.config.ipAddress}`, {type: 'WATCHING'});
+            client.user.setActivity(`the server ${this.config.ipAddress}`, { type: 'WATCHING' });
             console.log(`Ready. Logged in as ${client.user.tag}.`);
             setInterval(() => {
-                this.updateChannel();
+                this.autoStop().then(() => {
+                    this.updateChannel();
+                });
             }, ms(this.config.updateInterval))
         });
 
@@ -75,6 +79,35 @@ ${commandList.map(cmd => `**${cmd.name}**\n${cmd.description}\n\`${this.config.p
                 message.reply('There was an error trying to execute that command!');
             }
         });
+    }
+
+    /**
+     * Stop the server if there are no players online.
+     */
+    autoStop = async () => {
+        if (globalThis.autoStopFlag) {
+            // Fetch statistics from mcapi.us
+            const res = await fetch(`https://mcapi.us/server/status?ip=${this.config.ipAddress}${this.config.port ? `&port=${this.config.port}` : ''}`)
+            if (!res) {
+                return false
+            }
+            // Parse the mcapi.us response
+            const body = await res.json()
+
+            // Get the current player count, or set it to 0
+            const players = body.players.now
+            
+            // Stop the server if no players
+            if(players == 0) {
+                const channel = client.channels.cache.get(this.config.minecraftChannel)
+                await aws.stopServer().then(() => {
+                    channel.send("Server stopped: no players online.")
+                }).catch(err => {
+                    console.error(err);
+                    channel.send("Failed to auto stop the server.")
+                });
+            }
+        }
     }
 
     /**
